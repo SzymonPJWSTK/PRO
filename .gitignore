@@ -1,0 +1,6 @@
+/node_modules/
+/Liblary/
+/Temp/
+/Packages/
+*.vs/
+/*.csproj
