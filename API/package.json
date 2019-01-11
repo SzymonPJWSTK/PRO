@@ -1,0 +1,15 @@
+{
+    "name": "api-pro-lokale_gastronomiczne",
+    "description": "API projektu aplikacji dla lokali gastronomicznych",
+    "version": "0.0.1",
+    "author": "s15778, s15754",
+    "scripts": {
+        "start": "node app.js"
+    },
+    "engines": {
+        "node":">=8"
+    },
+    "dependencies": {
+        "express": "^4.16.3"
+    }
+}

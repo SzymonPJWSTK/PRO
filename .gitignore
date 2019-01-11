@@ -1,6 +1,8 @@
-/node_modules/
-/Liblary/
-/Temp/
-/Packages/
+node_modules/
+Library/
+Temp/
+Packages/
+*.unitypackage
+*.apk
 *.vs/
-/*.csproj
+*.csproj
