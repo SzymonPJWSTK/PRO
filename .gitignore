@@ -2,6 +2,7 @@ node_modules/
 Library/
 Temp/
 Packages/
+Priv/
 *.unitypackage
 *.apk
 *.vs/
