@@ -17,10 +17,12 @@ public class App : MonoBehaviour {
     private const string PRODUCTIONAPI = "";
 
     public MODE _mode = MODE.TEST;
-    public Text ho;
 
-    private string _cokolwiek = "";
     private WebSocket ws = new WebSocket("ws://localhost:8081/");
+    #endregion
+
+    #region EVENTS
+    public event System.Action<JSONNode> OnDataRecived;
     #endregion
 
     private void Start()
@@ -31,11 +33,6 @@ public class App : MonoBehaviour {
         ws.ConnectAsync();
     }
 
-    private void Update()
-    {
-        ho.text = _cokolwiek;
-    }
-
     #region WEBSOCKET
     private void OnOpen(object sender, System.EventArgs e)
     {
@@ -44,9 +41,12 @@ public class App : MonoBehaviour {
 
     private void OnMessage(object sender, MessageEventArgs e)
     {
-        _cokolwiek = e.Data;
         var json = JSONNode.Parse(e.Data);
-        Debug.Log(json);
+        if(json.Count > 0)
+        {
+            if (OnDataRecived != null)
+                OnDataRecived(json);
+        }
     }
 
     private void OnClose()

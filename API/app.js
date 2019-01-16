@@ -50,7 +50,9 @@ app.post('/basket/recalculate', function(req,res){
 
 app.post('/basket/place', function(req,res){
     basket.placeOrder(req.body);
-    kitchenWss.send(JSON.stringify(database.orders().get()));
+    if(kitchenWss != undefined)
+        kitchenWss.send(JSON.stringify(database.orders().last()));
+
     res.status(200).json();
 });
 //#endregion
@@ -58,7 +60,6 @@ app.post('/basket/place', function(req,res){
 //#region  WEBSOCKET
 wss.on('connection',ws=>{
     kitchenWss = ws;
-    kitchenWss.send("Połączono");
 });
 //#endregion
 

@@ -42,15 +42,18 @@ module.exports = function(database){
         var order = [];
         for (var key in json) {
             if (json.hasOwnProperty(key)) {
+                var orderedProduct = database.menu({___id:key}).get();
+
                 var orderItem = {
-                    name:  key,
-                    quantity: json[key]
+                    name:  orderedProduct[0].name,
+                    quantity: json[key],
+                    id: key
                 }
+
                 order.push(orderItem);
             }
         }
 
-        var o = JSON.stringify(order);
         database.orders.insert({ zamówienie: order});
     }
 
