@@ -3,6 +3,7 @@ Library/
 Temp/
 Packages/
 Priv/
+Builds/
 *.unitypackage
 *.apk
 *.vs/

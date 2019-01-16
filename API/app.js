@@ -1,9 +1,14 @@
+//#region VARIBLES
 const express = require('express');
 const bodyParser = require('body-parser');
+const WebSocket = require('ws');
+const wss = new WebSocket.Server({port:8081}); 
 
 var app = express();
 var database = require('./db/database')();
 var basket = require('./Scripts/Basket')(database);
+var kitchenWss;
+//#endregion
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -45,7 +50,15 @@ app.post('/basket/recalculate', function(req,res){
 
 app.post('/basket/place', function(req,res){
     basket.placeOrder(req.body);
+    kitchenWss.send(JSON.stringify(database.orders().get()));
     res.status(200).json();
+});
+//#endregion
+
+//#region  WEBSOCKET
+wss.on('connection',ws=>{
+    kitchenWss = ws;
+    kitchenWss.send("Połączono");
 });
 //#endregion
 
