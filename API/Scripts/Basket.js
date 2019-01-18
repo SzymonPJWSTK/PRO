@@ -38,28 +38,8 @@ module.exports = function(database){
         return response;
     }
 
-    function placeOrder(json){
-        var order = [];
-        for (var key in json) {
-            if (json.hasOwnProperty(key)) {
-                var orderedProduct = database.menu({___id:key}).get();
-
-                var orderItem = {
-                    name:  orderedProduct[0].name,
-                    quantity: json[key],
-                    id: key
-                }
-
-                order.push(orderItem);
-            }
-        }
-
-        database.orders.insert({ zamówienie: order});
-    }
-
     return{
         recalcuate:recalcuate,
         products:products,
-        placeOrder: placeOrder
     };
 }

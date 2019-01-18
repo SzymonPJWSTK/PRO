@@ -5,11 +5,13 @@ using SimpleJSON;
 
 public class Order : MonoBehaviour {
 
+    #region VARIBLES
     public Transform _itemsHolder;
     public OrderHolder _orderPrefab;
 
     private JSONNode _json;
     private bool _newData;
+    #endregion
 
     private void Start()
     {

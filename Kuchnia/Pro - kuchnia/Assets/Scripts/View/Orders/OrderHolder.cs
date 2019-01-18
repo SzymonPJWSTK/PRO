@@ -6,13 +6,15 @@ using UnityEngine.UI;
 
 public class OrderHolder : MonoBehaviour {
 
+    #region VARIBLES
     public Transform _orderItemsHolder;
     public OrderItem _orderItemPrefab;
     public Text _orderId;
 
     private string _id;
+    #endregion
 
-	public void AssignData(JSONNode json)
+    public void AssignData(JSONNode json)
     {
         _id = json["___id"].Value;
         _orderId.text = _id;
@@ -24,4 +26,22 @@ public class OrderHolder : MonoBehaviour {
         }
     }
 
+    public void EndOrder()
+    {
+        StartCoroutine(App.Instance.PostOrderRemove(
+            _id,
+            (s) => Success(s),
+            (f) => Error(f)
+         ));
+    }
+
+    private void Success(JSONNode json)
+    {
+        Destroy(this.gameObject);
+    }
+
+    private void Error(long errCode)
+    {
+        Debug.Log(errCode);
+    }
 }
