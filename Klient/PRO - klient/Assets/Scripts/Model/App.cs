@@ -94,9 +94,9 @@ public class App : MonoBehaviour {
         }
     }
 
-    public IEnumerator PostBasketPlace(Action<JSONNode> success, Action<long> failure)
+    public IEnumerator PostOrderPlace(Action<JSONNode> success, Action<long> failure)
     {
-        using (var www = UnityWebRequest.Post(API + "basket/place", _basket))
+        using (var www = UnityWebRequest.Post(API + "order/place", _basket))
         {
             yield return www.SendWebRequest();
 
@@ -175,6 +175,11 @@ public class App : MonoBehaviour {
     public void ResetBasket()
     {
         _basket.Clear();
+    }
+
+    public Dictionary<string,string> Basket
+    {
+        get { return _basket; }
     }
 
     #endregion

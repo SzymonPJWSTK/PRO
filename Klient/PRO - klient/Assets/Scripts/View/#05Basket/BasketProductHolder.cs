@@ -18,7 +18,7 @@ public class BasketProductHolder : MonoBehaviour
 
     public void AssignData(JSONNode json)
     {
-        _name.text = json["name"].Value;
+        _name.text = string.Format("{0} x {1}", json["name"].Value, App.Instance.Basket[json["___id"].Value]);
         _price.text = string.Format("{0} zł", json["price"].Value);
         _id = json["___id"].Value;
     }
