@@ -22,6 +22,19 @@ app.get('/categories', function(req,res){
     res.status(200).json(response);
 });
 
+app.get('/optionsCategories',function(req,res){
+    var response = database.categories().get();
+    var odp = "";
+    var i = 0;
+    while(response[i] != undefined)
+    {
+        odp += `<option value="${response[i].___id}">${response[i].name}</option>`
+        i++;
+    }
+
+    res.status(200).send(odp);
+});
+
 //#region ADMINISTRACJA
 app.get('/', function(req,res){
     res.sendFile('public/start.html', {root: __dirname })
@@ -86,8 +99,7 @@ app.post('/menu/availability', function(req,res){
 
 //#region BASKET
 app.post('/basket/products', function(req,res){
-    console.log(req.body);
-   // res.status(200).json(basket.products(req.body));
+   res.status(200).json(basket.products(req.body));
 });
 
 app.post('/basket/recalculate', function(req,res){

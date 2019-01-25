@@ -95,6 +95,7 @@ public class PagesManager : MonoBehaviour {
         _currentPage.NextPage -= ChangePage;
         _currentPage.PreviousPage -= PreviousPage;
         _currentPage = _nextPage;
+        _currentPage.gameObject.SetActive(true);
         HideLoader();
     }
 

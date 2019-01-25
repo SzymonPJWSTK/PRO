@@ -37,6 +37,7 @@ public class Basket : Page
             yield return new WaitUntil(() => InstantiateProduct(out instantiatedProduct));
             instantiatedProduct.AssignData(json[i]);
             instantiatedProduct.Remove = RemoveProduct;
+            instantiatedProduct.Rec = RecalculateBasket;
             _instantiatedProducts.Add(instantiatedProduct);
         }
 

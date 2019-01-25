@@ -166,6 +166,24 @@ public class App : MonoBehaviour {
             _basket.Add(id, "1");
     }
 
+    public void RemoveOneProduct(string id)
+    {
+        if(_basket.ContainsKey(id))
+        {
+            var result = -1;
+            var success = int.TryParse(_basket[id], out result);
+            if (success && result != -1)
+            {
+                result--;
+                _basket[id] = result.ToString();
+            }
+            else
+            {
+                _basket[id] = "0";
+            }
+        }
+    }
+
     public void RemoveProduct(string id)
     {
        if(_basket.ContainsKey(id))
