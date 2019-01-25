@@ -8,14 +8,32 @@ public class Meal : MonoBehaviour {
     #region VARIBLES
     public Transform _mealsHolder;
     public MealItem _mealPrefab;
+
+    private JSONNode _json;
+    private bool _newData;
     #endregion
 
     private void Start()
     {
-        StartCoroutine(App.Instance.GetMenuAll(
-            (s) => StartCoroutine(MenuRecived(s)),
-            (f) => MealsError(f)
-        ));
+        App.Instance.OnDataRecived += OrderRecived;
+    }
+
+    private void OrderRecived(JSONNode json)
+    {
+        if (json["zamówienie"].Count > 0)
+            return;
+
+        _json = json;
+        _newData = true;
+    }
+
+    private void Update()
+    {
+        if(_newData)
+        {
+            _newData = false;
+            StartCoroutine(MenuRecived(_json));
+        }
     }
 
     private IEnumerator MenuRecived(JSONNode json)
