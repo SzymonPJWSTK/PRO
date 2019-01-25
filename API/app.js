@@ -127,6 +127,7 @@ app.post('/order/remove', function(req,res){
 wss.on('connection',ws=>{
     kitchenWss = ws;
     kitchenWss.send(JSON.stringify(database.menu().get()));
+    kitchenWss.send(JSON.stringify(database.orders().last()));
 });
 //#endregion
 
