@@ -74,6 +74,9 @@ public class Basket : Page
 
     public void PlaceOrder()
     {
+        if (App.Instance.Basket.Count == 0)
+            return;
+
         StartCoroutine(App.Instance.PostOrderPlace(
             (s) => Success(s),
             (f) => Failure(f)

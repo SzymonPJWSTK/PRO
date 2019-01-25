@@ -20,8 +20,11 @@ public class Order : MonoBehaviour {
 
     private void OrderRecived(JSONNode json)
     {
-        _json = json;
-        _newData = true;
+        if(json["zamówienie"].Count > 0)
+        {
+            _json = json;
+            _newData = true;
+        }
     }
 
     private void Update()

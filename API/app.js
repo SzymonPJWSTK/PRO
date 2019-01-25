@@ -15,12 +15,45 @@ var kitchenWss;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
+//app.use(express.static('./public'));
+
 app.get('/categories', function(req,res){
     var response = database.categories().get();
     res.status(200).json(response);
 });
 
-//#region  MENU
+//#region ADMINISTRACJA
+app.get('/', function(req,res){
+    res.sendFile('public/start.html', {root: __dirname })
+});
+
+app.get('/addCategory', function(req,res){
+    res.sendFile('public/addCategory.html', {root: __dirname })
+});
+
+app.get('/addMeal', function(req,res){
+    res.sendFile('public/addMeal.html', {root: __dirname })
+});
+
+app.post('/newCategory', function(req,res){
+    menu.addCategory(req.body);
+    res.sendFile('public/start.html', {root: __dirname })
+});
+
+app.post('/newMeal', function(req,res){
+    menu.addMenu(req.body);
+    if(kitchenWss != undefined)
+    {
+        var str = JSON.stringify(database.menu().last());
+        kitchenWss.send("["+str+"]");
+    }
+
+    res.sendFile('public/start.html', {root: __dirname })
+});
+
+//#endregion
+
+//#region MENU
 app.get('/menu', function (req,res) {
    var response = database.menu({category: req.query.category, available : "True"}).get();
    res.status(200).json(response);
@@ -36,7 +69,7 @@ app.post('/menu', function(req,res){
                 name:req.body.name, 
                 category:req.body.name
                };
-    database.menu.insert(meal);
+    database.menu.insert(meal);  
     res.status(200).send("ok");
 });
 
@@ -51,9 +84,10 @@ app.post('/menu/availability', function(req,res){
 });
 //#endregion
 
-//#region  BASKET
+//#region BASKET
 app.post('/basket/products', function(req,res){
-    res.status(200).json(basket.products(req.body));
+    console.log(req.body);
+   // res.status(200).json(basket.products(req.body));
 });
 
 app.post('/basket/recalculate', function(req,res){
@@ -77,9 +111,10 @@ app.post('/order/remove', function(req,res){
 
 //#endregion
 
-//#region  WEBSOCKET
+//#region WEBSOCKET
 wss.on('connection',ws=>{
     kitchenWss = ws;
+    kitchenWss.send(JSON.stringify(database.menu().get()));
 });
 //#endregion
 
