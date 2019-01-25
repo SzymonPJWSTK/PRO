@@ -1,0 +1,39 @@
+<html>
+    <head>
+        <script>
+                function getCategories() {
+
+                    const Http = new XMLHttpRequest();
+                    const url='http://localhost:8080/optionsCategories';
+                    Http.open("GET", url);
+                    Http.send();
+
+                    Http.onreadystatechange=(e)=>{
+                          var cats = document.getElementById('categories');
+                          cats.innerHTML = Http.responseText;
+                    }
+                }
+        </script>
+    </head>
+    <body onload="getCategories()">
+        <form method="POST" action="/newMeal" >
+            <table>
+                <tr>
+                    <th>Kategorie <select id="categories" name="category"></select></th>
+                </tr>
+                <tr>
+                    <th>Nazwa: <input name="mealName" type="text" required></th>
+                </tr>
+                <tr>
+                    <th>Cena: <input name="mealPrice" type="number" min="1" required></th>
+                </tr>
+                <tr>
+                    <th><textarea name="mealDesc" ></textarea></th>
+                </tr>
+                <tr>
+                    <th><input type="submit"></th>
+                </tr>
+            </table>
+        </form>
+    </body>
+</html>

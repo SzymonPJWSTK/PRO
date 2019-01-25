@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class Product : Page
 {
     public Text _desc;
+    public Text _price;
     private JSONNode _json;
 
     public override void LoadPage(JSONNode json, Dictionary<string,object> data)
@@ -16,6 +17,7 @@ public class Product : Page
         _isLoaded = true;
         _desc.text = json[0]["desc"].Value;
         _json = json[0];
+        _price.text = string.Format("{0} zł", _json["price"].Value);
     }
 
     public void Order()

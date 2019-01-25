@@ -3,7 +3,7 @@ module.exports = function(database){
     function addMenu(json)
     {
         var categoryName = database.categories({___id:json.category}).get();
-
+        console.log(json);
         var meal = {
             name : json.mealName,
             price: json.mealPrice,
